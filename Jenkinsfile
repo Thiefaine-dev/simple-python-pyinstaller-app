@@ -12,6 +12,7 @@ pipeline {
         }
         stage('Test') { 
             steps {
+                sh 'pip install pytest'
                 sh 'pytest --junit-xml test-reports/results.xml sources/test_calc.py'
             }
             post {
