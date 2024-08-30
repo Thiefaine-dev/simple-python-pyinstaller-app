@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('Initialisation') {
             steps {
-                sh 'python3 pip install pytest'            }
+                sh 'apt install python3-pytest'
+            }
         }
         stage('Build') {
             steps {
