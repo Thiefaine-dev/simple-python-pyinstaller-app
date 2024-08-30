@@ -4,6 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'python3 -m py_compile sources/add2vals.py sources/calc.py'
+                sh 'pip install pytest'
                 stash(name: 'compiled-results', includes: 'sources/*.py*')
             }
         }
