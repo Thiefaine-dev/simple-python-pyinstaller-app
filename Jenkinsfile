@@ -1,11 +1,9 @@
 pipeline {
     agent any
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
-        stage('Initialisation') {
-            steps {
-                sh 'apt install python3-pytest'
-            }
-        }
         stage('Build') {
             steps {
                 sh 'python3 -m py_compile sources/add2vals.py sources/calc.py'
@@ -19,6 +17,16 @@ pipeline {
             post {
                 always {
                     junit 'test-reports/results.xml' 
+                }
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh "pyinstaller --onefile sources/add2vals.py"
+            }
+            post {
+                success {
+                    archiveArtifacts 'dist/add2vals'
                 }
             }
         }
